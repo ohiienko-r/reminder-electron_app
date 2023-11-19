@@ -22,7 +22,7 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    resizable: false,
+    // resizable: false,
     icon: nativeImage.createFromPath("assets/Logo.png"),
     webPreferences: {
       nodeIntegration: true,

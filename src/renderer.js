@@ -11,9 +11,19 @@ let rIntervals = [];
 
 window.onload = () => {
   newNotification(NOTIFICATION.DEFAULT_TITLE, NOTIFICATION.DEFAULT_BODY);
+
   const currentShift = JSON.parse(localStorage.getItem("shift"));
+
   if (currentShift) {
     console.log("Shift is present");
+    switch (currentShift) {
+      case SHIFT.DAY:
+        startDayShiftReminder.disabled = true;
+        break;
+      case SHIFT.NIGHT:
+        startNightShiftReminder.disabled = true;
+        break;
+    }
   } else console.log("No shift presented");
 };
 
@@ -22,6 +32,7 @@ startDayShiftReminder.onclick = () => {
     NOTIFICATION.DAY_SHIFT_START_REMINDER_TITLE,
     NOTIFICATION.DAY_SHIFT_START_REMINDER_BODY
   );
+
   startDayShiftReminder.disabled = true;
 
   localStorage.setItem("shift", JSON.stringify(SHIFT.DAY));

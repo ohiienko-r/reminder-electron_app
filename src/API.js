@@ -21,7 +21,7 @@ export const newNotification = (title, body) => {
 export const remind = (reminderTitle, reminderBody) => {
   const now = new Date();
 
-  const isReminderTime = now.getHours() === 8 || now.getHours() === 17;
+  const isReminderTime = now.getHours() === 8 || now.getHours() === 20;
 
   if (isReminderTime) {
     //TODO: add separation on checkin/checkout depending on current time
@@ -39,12 +39,12 @@ export const getTimeUntilNextReminder = () => {
   const nextReminderTime = new Date(now);
 
   // If it's later than 17:00, then next reminder will be fired at 08:00 next day
-  if (now.getHours() >= 17) {
+  if (now.getHours() >= 20) {
     nextReminderTime.setDate(now.getDate() + 1);
     nextReminderTime.setHours(8, 0, 0, 0);
   } else if (now.getHours() >= 8) {
     // If it's later than 08:00, then next reminder will be fired today at 17:00
-    nextReminderTime.setHours(17, 0, 0, 0);
+    nextReminderTime.setHours(20, 0, 0, 0);
   } else {
     // else next reminder will be fired today at 08:00
     nextReminderTime.setHours(8, 0, 0, 0);
