@@ -15,3 +15,8 @@ export const NOTIFICATION = {
   STOP_REMINDING_TITLE: "Reminding stopped 😱",
   STOP_REMINDING_BODY: "Не забудь потім ввімкнути мене, добре? 🤗",
 };
+
+export const SHIFT = {
+  DAY: "day",
+  NIGHT: "night",
+};

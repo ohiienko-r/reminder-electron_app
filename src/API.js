@@ -1,5 +1,10 @@
 const { ipcRenderer } = require("electron");
 
+/**
+ *
+ * @param {String} title - message title to display in a system message
+ * @param {String} body - message body to display in a system message
+ */
 export const newNotification = (title, body) => {
   new Notification(title, { body: body }).onclick = () => {
     const urlToOpen = "https://time-flu.com/";
@@ -47,8 +52,3 @@ export const getTimeUntilNextReminder = () => {
 
   return nextReminderTime - now;
 };
-
-// setTimeout(() => {
-//   remind();
-//   setInterval(remind, 24 * 60 * 60 * 1000);
-// }, getTimeUntilNextReminder());
