@@ -135,6 +135,8 @@ export const removeIntervals = () => {
   rIntervals.forEach((intervId) => {
     clearInterval(intervId);
   });
+
+  console.log("All intervals are cleared");
 };
 
 /**
