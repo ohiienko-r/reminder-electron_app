@@ -21,36 +21,37 @@ export const newNotification = (title, body) => {
  * @param {String} notification - object with all notifications text
  * @param {String} shift - day or night shift
  */
-export const remind = (notification, shift) => {
+export const remind = (shift) => {
   const now = new Date();
   let isReminderTime;
   let reminderTitle;
   let reminderBody;
 
   if (shift === SHIFT.DAY) {
-    isReminderTime = now.getHours() === 8 || now.getHours() === 17; //true of false
+    isReminderTime = now.getHours() === 8 || now.getHours() === 17; //true or false
 
     if (now.getHours() === 8) {
-      reminderTitle = notification.CHECK_IN_REMINDER_TITLE;
-      reminderBody = notification.CHECK_IN_REMINDER_BODY;
+      reminderTitle = NOTIFICATION.CHECK_IN_REMINDER_TITLE;
+      reminderBody = NOTIFICATION.CHECK_IN_REMINDER_BODY;
     } else if (now.getHours() === 17) {
-      reminderTitle = notification.CHECK_OUT_REMINDER_TITLE;
-      reminderBody = notification.CHECK_OUT_REMINDER_BODY;
+      reminderTitle = NOTIFICATION.CHECK_OUT_REMINDER_TITLE;
+      reminderBody = NOTIFICATION.CHECK_OUT_REMINDER_BODY;
     }
   } else {
     isReminderTime = now.getHours() === 17 || now.getHours() === 0; //true or false
 
     if (now.getHours() === 17) {
-      reminderTitle = notification.CHECK_IN_REMINDER_TITLE;
-      reminderBody = notification.CHECK_IN_REMINDER_BODY;
+      reminderTitle = NOTIFICATION.CHECK_IN_REMINDER_TITLE;
+      reminderBody = NOTIFICATION.CHECK_IN_REMINDER_BODY;
     } else if (now.getHours() === 0) {
-      reminderTitle = notification.CHECK_OUT_REMINDER_TITLE;
-      reminderBody = notification.CHECK_OUT_REMINDER_BODY;
+      reminderTitle = NOTIFICATION.CHECK_OUT_REMINDER_TITLE;
+      reminderBody = NOTIFICATION.CHECK_OUT_REMINDER_BODY;
     }
   }
 
   if (isReminderTime) {
     newNotification(reminderTitle, reminderBody);
+    localStorage.setItem(remindAt, "");
   }
 };
 
@@ -64,36 +65,28 @@ export const getTimeUntilNextReminder = (shift) => {
   const nextReminderTime = new Date(now);
 
   if (shift === SHIFT.DAY) {
-    switch (now.getHours()) {
-      case now.getHours() >= 17:
-        nextReminderTime.setDate(now.getDate() + 1);
-        nextReminderTime.setHours(8, 0, 0, 0);
-        console.log("Reminder will be fired next day at 08:00");
-        break;
-      case now.getHours() >= 8:
-        nextReminderTime.setHours(17, 0, 0, 0);
-        console.log("Reminder will be fired at 17:00 tonight");
-        break;
-      default:
-        nextReminderTime.setHours(8, 0, 0, 0);
-        console.log("Reminder will be fired ar 08:00 by default");
-        break;
+    if (now.getHours() >= 17) {
+      nextReminderTime.setDate(now.getDate() + 1);
+      nextReminderTime.setHours(8, 0, 0, 0);
+      console.log("Reminder will be fired next day at 08:00");
+    } else if (now.getHours() >= 8 && now.getHours() < 17) {
+      nextReminderTime.setHours(17, 0, 0, 0);
+      console.log("Reminder will be fired at 17:00 tonight");
+    } else {
+      nextReminderTime.setHours(8, 0, 0, 0);
+      console.log("Reminder will be fired at 08:00 by default");
     }
-  } else {
-    switch (now.getHours()) {
-      case now.getHours() >= 0:
-        nextReminderTime.setDate(now.getDate());
-        nextReminderTime.setHours(17, 0, 0, 0);
-        console.log("Reminder will be fired at 17:00. Date already changed");
-        break;
-      case now.getHours() >= 17:
-        nextReminderTime.setHours(0, 0, 0, 0);
-        console.log("Reminder will be fired at 00:00 tonight");
-        break;
-      default:
-        nextReminderTime.setHours(17, 0, 0, 0);
-        console.log("Reminder will be fired at 17:00 by default");
-        break;
+  } else if (shift === SHIFT.NIGHT) {
+    if (now.getHours() >= 0 && now.getHours() < 17) {
+      nextReminderTime.setDate(now.getDate());
+      nextReminderTime.setHours(17, 0, 0, 0);
+      console.log("Reminder will be fired at 17:00. Date already changed");
+    } else if (now.getHours() >= 17 && now.getHours() < 0) {
+      nextReminderTime.setHours(0, 0, 0, 0);
+      console.log("Reminder will be fired at 00:00 tonight");
+    } else {
+      nextReminderTime.setHours(17, 0, 0, 0);
+      console.log("Reminder will be fired at 17:00 by default");
     }
   }
 
@@ -115,7 +108,7 @@ export const shiftOnAppLoadActions = (
   const currentShift = JSON.parse(localStorage.getItem("shift"));
 
   if (currentShift) {
-    console.log("Shift is present");
+    console.log(`${currentShift} shift is present`);
     switch (currentShift) {
       case SHIFT.DAY:
         startMorningReminderBtn.disabled = true;

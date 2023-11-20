@@ -33,7 +33,7 @@ startDayShiftReminder.onclick = () => {
   localStorage.setItem("shift", JSON.stringify(SHIFT.DAY));
 
   setTimeout(() => {
-    remind(NOTIFICATION, SHIFT.DAY);
+    remind(SHIFT.DAY);
 
     let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
     rIntervals.push(nIntervId);
@@ -48,6 +48,16 @@ startNightShiftReminder.onclick = () => {
     NOTIFICATION.NIGHT_SHIFT_START_REMINDER_BODY
   );
   startNightShiftReminder.disabled = true;
+
+  localStorage.setItem("shift", JSON.stringify(SHIFT.NIGHT));
+
+  setTimeout(() => {
+    remind(SHIFT.NIGHT);
+
+    let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
+    rIntervals.push(nIntervId);
+  }, getTimeUntilNextReminder(SHIFT.NIGHT));
+
   stopAllReminders.disabled = false;
 };
 
