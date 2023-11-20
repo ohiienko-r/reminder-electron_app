@@ -1,3 +1,15 @@
+@font-face {
+  font-family: Inter, system-ui;
+  src: url("../fonts/Inter-VariableFont_slnt\,wght.ttf");
+}
+
+* {
+  font-family: "Inter", system-ui;
+
+  animation: global;
+  animation-duration: 0.4s;
+}
+
 .wrapper {
   height: 100vh;
   display: flex;
@@ -66,7 +78,7 @@ footer {
   padding: 5px;
 
   text-align: center;
-  font-weight: 300;
+
 
   background-color: #fefefe;
   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.25);

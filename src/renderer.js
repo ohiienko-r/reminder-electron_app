@@ -1,4 +1,9 @@
-import { newNotification, remind, getTimeUntilNextReminder } from "./API.js";
+import {
+  newNotification,
+  remind,
+  getTimeUntilNextReminder,
+  shiftOnAppLoadActions,
+} from "./API.js";
 import { NOTIFICATION, SHIFT } from "./helpers.js";
 
 import "./css/reset.css";
@@ -10,21 +15,11 @@ const stopAllReminders = document.getElementById("stop-btn");
 let rIntervals = [];
 
 window.onload = () => {
-  newNotification(NOTIFICATION.DEFAULT_TITLE, NOTIFICATION.DEFAULT_BODY);
-
-  const currentShift = JSON.parse(localStorage.getItem("shift"));
-
-  if (currentShift) {
-    console.log("Shift is present");
-    switch (currentShift) {
-      case SHIFT.DAY:
-        startDayShiftReminder.disabled = true;
-        break;
-      case SHIFT.NIGHT:
-        startNightShiftReminder.disabled = true;
-        break;
-    }
-  } else console.log("No shift presented");
+  shiftOnAppLoadActions(
+    startDayShiftReminder,
+    startNightShiftReminder,
+    stopAllReminders
+  );
 };
 
 startDayShiftReminder.onclick = () => {
@@ -43,6 +38,8 @@ startDayShiftReminder.onclick = () => {
     let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
     rIntervals.push(nIntervId);
   }, getTimeUntilNextReminder(SHIFT.DAY));
+
+  stopAllReminders.disabled = false;
 };
 
 startNightShiftReminder.onclick = () => {
@@ -51,6 +48,7 @@ startNightShiftReminder.onclick = () => {
     NOTIFICATION.NIGHT_SHIFT_START_REMINDER_BODY
   );
   startNightShiftReminder.disabled = true;
+  stopAllReminders.disabled = false;
 };
 
 stopAllReminders.onclick = () => {
@@ -58,8 +56,10 @@ stopAllReminders.onclick = () => {
     NOTIFICATION.STOP_REMINDING_TITLE,
     NOTIFICATION.STOP_REMINDING_BODY
   );
+
   startDayShiftReminder.disabled = false;
   startNightShiftReminder.disabled = false;
+  stopAllReminders.disabled = true;
 
   localStorage.clear();
 

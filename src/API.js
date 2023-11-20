@@ -1,5 +1,5 @@
 const { ipcRenderer } = require("electron");
-import { SHIFT } from "./helpers";
+import { SHIFT, NOTIFICATION } from "./helpers";
 
 /**
  *
@@ -98,4 +98,35 @@ export const getTimeUntilNextReminder = (shift) => {
   }
 
   return nextReminderTime - now;
+};
+
+/**
+ * Funcrion purpose is to handle on app load actioncs according to shift type chosen by user (saved in the local storage)
+ *
+ * @param {HTMLButtonElement} startMorningReminderBtn - start day shift reminder button
+ * @param {HTMLButtonElement} startNightReminderBtn - start night shift reminder button
+ * @param {HTMLButtonElement} stopRemindingBtn - srop all reminders button
+ */
+export const shiftOnAppLoadActions = (
+  startMorningReminderBtn,
+  startNightReminderBtn,
+  stopRemindingBtn
+) => {
+  const currentShift = JSON.parse(localStorage.getItem("shift"));
+
+  if (currentShift) {
+    console.log("Shift is present");
+    switch (currentShift) {
+      case SHIFT.DAY:
+        startMorningReminderBtn.disabled = true;
+        break;
+      case SHIFT.NIGHT:
+        startNightReminderBtn.disabled = true;
+        break;
+    }
+  } else {
+    newNotification(NOTIFICATION.DEFAULT_TITLE, NOTIFICATION.DEFAULT_BODY);
+    stopRemindingBtn.disabled = true;
+    console.log("No shift presented");
+  }
 };
