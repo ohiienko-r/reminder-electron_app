@@ -65,6 +65,7 @@ app.whenReady().then(() => {
   ]);
 
   tray.setContextMenu(contextMenu);
+  tray.setToolTip("Bunny reminder");
 
   tray.on("click", () => {
     if (win.isVisible()) {
