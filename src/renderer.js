@@ -1,8 +1,7 @@
 import {
   newNotification,
-  remind,
-  getTimeUntilNextReminder,
   shiftOnAppLoadActions,
+  setReminderInterval,
 } from "./API.js";
 import { NOTIFICATION, SHIFT } from "./helpers.js";
 
@@ -12,7 +11,6 @@ import "./css/index.css";
 const startDayShiftReminder = document.getElementById("day-btn");
 const startNightShiftReminder = document.getElementById("night-btn");
 const stopAllReminders = document.getElementById("stop-btn");
-let rIntervals = [];
 
 window.onload = () => {
   shiftOnAppLoadActions(
@@ -32,12 +30,7 @@ startDayShiftReminder.onclick = () => {
 
   localStorage.setItem("shift", JSON.stringify(SHIFT.DAY));
 
-  setTimeout(() => {
-    remind(SHIFT.DAY);
-
-    let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
-    rIntervals.push(nIntervId);
-  }, getTimeUntilNextReminder(SHIFT.DAY));
+  setReminderInterval(SHIFT.DAY);
 
   stopAllReminders.disabled = false;
 };
@@ -51,12 +44,7 @@ startNightShiftReminder.onclick = () => {
 
   localStorage.setItem("shift", JSON.stringify(SHIFT.NIGHT));
 
-  setTimeout(() => {
-    remind(SHIFT.NIGHT);
-
-    let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
-    rIntervals.push(nIntervId);
-  }, getTimeUntilNextReminder(SHIFT.NIGHT));
+  setReminderInterval(SHIFT.NIGHT);
 
   stopAllReminders.disabled = false;
 };
@@ -72,8 +60,4 @@ stopAllReminders.onclick = () => {
   stopAllReminders.disabled = true;
 
   localStorage.clear();
-
-  rIntervals.forEach((intervId) => {
-    clearInterval(intervId);
-  });
 };

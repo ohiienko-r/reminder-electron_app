@@ -1,6 +1,8 @@
 const { ipcRenderer } = require("electron");
 import { SHIFT, NOTIFICATION } from "./helpers";
 
+let rIntervals = [];
+
 /**
  *
  * @param {String} title - message title to display in a system message
@@ -13,6 +15,12 @@ export const newNotification = (title, body) => {
   };
 };
 
+/**
+ * Function purpose is to define which kind of notification text will be displayed according to time and shift
+ *
+ * @param {String} shift - day or night shift pointer
+ * @returns object - contains notification title and body
+ */
 const setNotificationText = (shift) => {
   const now = new Date();
   let notificationObj;
@@ -47,24 +55,23 @@ const setNotificationText = (shift) => {
 };
 
 /**
- * Function purpose is to check if it's 08:00 or 17:00 || 17:00 or 00:00 and firese the respective reminder
+ * Function purpose is to check if it's 08:00 or 17:00 || 17:00 or 00:00 and fires the respective reminder
  *
  * @param {String} notification - object with all notifications text
  * @param {String} shift - day or night shift
  */
-export const remind = (shift) => {
+const remind = (shift) => {
   const reminder = setNotificationText(shift);
 
   newNotification(reminder.title, reminder.body);
-  localStorage.setItem(remindAt, "");
 };
 
 /**
- * Function purpose is to figure out a time till reminder should be fired.
+ * Function purpose is to figure out a time till reminder should be fired for setTimeout function according to shift.
  *
  * @returns time till next reminder in milliseconds
  */
-export const getTimeUntilNextReminder = (shift) => {
+const getTimeUntilNextReminder = (shift) => {
   const now = new Date();
   const nextReminderTime = new Date(now);
 
@@ -80,12 +87,15 @@ export const getTimeUntilNextReminder = (shift) => {
       nextReminderTime.setHours(8, 0, 0, 0);
       console.log("Reminder will be fired at 08:00 by default");
     }
-  } else if (shift === SHIFT.NIGHT) {
+  }
+
+  if (shift === SHIFT.NIGHT) {
     if (now.getHours() >= 0 && now.getHours() < 17) {
       nextReminderTime.setDate(now.getDate());
       nextReminderTime.setHours(17, 0, 0, 0);
       console.log("Reminder will be fired at 17:00. Date already changed");
-    } else if (now.getHours() >= 17 && now.getHours() < 0) {
+    } else if (now.getHours() >= 17) {
+      nextReminderTime.setDate(now.getDate() + 1);
       nextReminderTime.setHours(0, 0, 0, 0);
       console.log("Reminder will be fired at 00:00 tonight");
     } else {
@@ -98,14 +108,44 @@ export const getTimeUntilNextReminder = (shift) => {
 };
 
 /**
+ * Function purpose is to set timeout before next reminder should be fired and at the moment of notification to set interval on 24H
+ *
+ * @param {String} shift - day or night shift pointer
+ */
+export const setReminderInterval = (shift) => {
+  setTimeout(() => {
+    remind(shift);
+
+    let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
+    rIntervals.push(nIntervId);
+
+    setTimeout(() => {
+      remind(shift);
+
+      let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
+      rIntervals.push(nIntervId);
+    }, getTimeUntilNextReminder(shift));
+  }, getTimeUntilNextReminder(shift));
+};
+
+/**
+ * Simply clears all presetn intervals to stop reminding
+ */
+export const removeIntervals = () => {
+  rIntervals.forEach((intervId) => {
+    clearInterval(intervId);
+  });
+};
+
+/**
  * Funcrion purpose is to handle on app load actioncs according to shift type chosen by user (saved in the local storage)
  *
- * @param {HTMLButtonElement} startMorningReminderBtn - start day shift reminder button
+ * @param {HTMLButtonElement} startDayReminderBtn - start day shift reminder button
  * @param {HTMLButtonElement} startNightReminderBtn - start night shift reminder button
  * @param {HTMLButtonElement} stopRemindingBtn - srop all reminders button
  */
 export const shiftOnAppLoadActions = (
-  startMorningReminderBtn,
+  startDayReminderBtn,
   startNightReminderBtn,
   stopRemindingBtn
 ) => {
@@ -113,11 +153,14 @@ export const shiftOnAppLoadActions = (
 
   if (currentShift) {
     console.log(`${currentShift} shift is present`);
+
     switch (currentShift) {
       case SHIFT.DAY:
-        startMorningReminderBtn.disabled = true;
+        startDayReminderBtn.disabled = true;
+        setReminderInterval(SHIFT.DAY);
         break;
       case SHIFT.NIGHT:
+        setReminderInterval(SHIFT.NIGHT);
         startNightReminderBtn.disabled = true;
         break;
     }
