@@ -13,7 +13,38 @@ export const newNotification = (title, body) => {
   };
 };
 
-//TODO: write a function which will define which notification title and body should be displayed according to time
+const setNotificationText = (shift) => {
+  const now = new Date();
+  let notificationObj;
+
+  if (shift === SHIFT.DAY) {
+    if (now.getHours() === 8) {
+      notificationObj = {
+        title: NOTIFICATION.CHECK_IN_REMINDER_TITLE,
+        body: NOTIFICATION.CHECK_IN_REMINDER_BODY,
+      };
+    } else if (now.getHours() === 17) {
+      notificationObj = {
+        title: NOTIFICATION.CHECK_OUT_REMINDER_TITLE,
+        body: NOTIFICATION.CHECK_OUT_REMINDER_BODY,
+      };
+    }
+  } else if (shift === SHIFT.NIGHT) {
+    if (now.getHours() === 17) {
+      notificationObj = {
+        title: NOTIFICATION.CHECK_IN_REMINDER_TITLE,
+        body: NOTIFICATION.CHECK_IN_REMINDER_BODY,
+      };
+    } else if (now.getHours() === 0) {
+      notificationObj = {
+        title: NOTIFICATION.CHECK_OUT_REMINDER_TITLE,
+        body: NOTIFICATION.CHECK_OUT_REMINDER_BODY,
+      };
+    }
+  }
+
+  return notificationObj;
+};
 
 /**
  * Function purpose is to check if it's 08:00 or 17:00 || 17:00 or 00:00 and firese the respective reminder
@@ -22,37 +53,10 @@ export const newNotification = (title, body) => {
  * @param {String} shift - day or night shift
  */
 export const remind = (shift) => {
-  const now = new Date();
-  let isReminderTime;
-  let reminderTitle;
-  let reminderBody;
+  const reminder = setNotificationText(shift);
 
-  if (shift === SHIFT.DAY) {
-    isReminderTime = now.getHours() === 8 || now.getHours() === 17; //true or false
-
-    if (now.getHours() === 8) {
-      reminderTitle = NOTIFICATION.CHECK_IN_REMINDER_TITLE;
-      reminderBody = NOTIFICATION.CHECK_IN_REMINDER_BODY;
-    } else if (now.getHours() === 17) {
-      reminderTitle = NOTIFICATION.CHECK_OUT_REMINDER_TITLE;
-      reminderBody = NOTIFICATION.CHECK_OUT_REMINDER_BODY;
-    }
-  } else {
-    isReminderTime = now.getHours() === 17 || now.getHours() === 0; //true or false
-
-    if (now.getHours() === 17) {
-      reminderTitle = NOTIFICATION.CHECK_IN_REMINDER_TITLE;
-      reminderBody = NOTIFICATION.CHECK_IN_REMINDER_BODY;
-    } else if (now.getHours() === 0) {
-      reminderTitle = NOTIFICATION.CHECK_OUT_REMINDER_TITLE;
-      reminderBody = NOTIFICATION.CHECK_OUT_REMINDER_BODY;
-    }
-  }
-
-  if (isReminderTime) {
-    newNotification(reminderTitle, reminderBody);
-    localStorage.setItem(remindAt, "");
-  }
+  newNotification(reminder.title, reminder.body);
+  localStorage.setItem(remindAt, "");
 };
 
 /**
