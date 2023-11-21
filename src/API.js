@@ -2,6 +2,7 @@ const { ipcRenderer } = require("electron");
 import { SHIFT, NOTIFICATION } from "./helpers";
 
 let rIntervals = [];
+let rTimeouts = [];
 
 /**
  *
@@ -114,19 +115,21 @@ const getTimeUntilNextReminder = (shift) => {
  * @param {String} shift - day or night shift pointer
  */
 export const setReminderInterval = (shift) => {
-  setTimeout(() => {
+  let fTimeoutId = setTimeout(() => {
     remind(shift);
 
     let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
     rIntervals.push(nIntervId);
 
-    setTimeout(() => {
+    let sTimeoutId = setTimeout(() => {
       remind(shift);
 
       let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
       rIntervals.push(nIntervId);
     }, getTimeUntilNextReminder(shift));
+    rTimeouts.push(sTimeoutId);
   }, getTimeUntilNextReminder(shift));
+  rTimeouts.push(fTimeoutId);
 };
 
 /**
@@ -136,8 +139,12 @@ export const removeIntervals = () => {
   rIntervals.forEach((intervId) => {
     clearInterval(intervId);
   });
-
   console.log("All intervals are cleared");
+
+  rTimeouts.forEach((timeoutId) => {
+    clearTimeout(timeoutId);
+  });
+  console.log("All timeouts are cleared");
 };
 
 /**
