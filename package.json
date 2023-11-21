@@ -1,8 +1,8 @@
 {
   "name": "bunny",
-  "productName": "bunny",
+  "productName": "Bunny",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Bunny reminder",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
