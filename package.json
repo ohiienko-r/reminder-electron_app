@@ -1,7 +1,7 @@
 {
   "name": "bunny",
   "productName": "Bunny",
-  "version": "1.0.0",
+  "version": "0.9.2",
   "description": "Bunny reminder",
   "main": ".vite/build/main.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "Roman Ohiienko",
+    "name": "Roman O.",
     "email": "ohiienko.r@gmail.com"
   },
   "license": "MIT",
