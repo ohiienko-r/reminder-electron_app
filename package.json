@@ -1,9 +1,56 @@
 {
   "name": "bunny",
   "productName": "Bunny",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "Bunny reminder",
   "main": ".vite/build/main.js",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "Bunny",
+        "icon": "./assets/Logo.png"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Bunny",
+            "description": "Bunny reminder",
+            "icon": "./assets/Logo.png",
+            "setupIcon": "./assets/Logo.ico",
+            "loadingGif": "./assets/preloader.gif",
+            "version": "0.9.4",
+            "targets": [
+              "win32"
+            ]
+          }
+        }
+      ],
+      "plugins": [
+        {
+          "name": "@electron-forge/plugin-vite",
+          "config": {
+            "build": [
+              {
+                "entry": "src/main.js",
+                "config": "vite.main.config.mjs"
+              },
+              {
+                "entry": "src/preload.js",
+                "config": "vite.preload.config.mjs"
+              }
+            ],
+            "renderer": [
+              {
+                "name": "main_window",
+                "config": "vite.renderer.config.mjs"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
