@@ -1,6 +1,9 @@
 module.exports = {
   packagerConfig: {},
-  rebuildConfig: {},
+  rebuildConfig: {
+    icon: "./assets/Logo",
+    name: "Bunny",
+  },
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
@@ -8,14 +11,10 @@ module.exports = {
         name: "Bunny",
         authors: "Ohiienko R.",
         description: "Bunny reminder",
-        exe: "Bunny",
-        setupExe: "install_bunny-reminder",
-        iconUrl:
-          "https://drive.google.com/file/d/1JJa4oBLHCk1lG0Hw_7OVFXz7fA0IovAL/view?usp=sharing",
-        icon: "/assets/Logo",
-        setupIcon: "/assets/Logo.ico",
-        loadingGif: "/assets/preloader.gif",
-        version: "0.9.2",
+        icon: "./assets/Logo",
+        setupIcon: "./assets/Logo.ico",
+        loadingGif: "./assets/preloader.gif",
+        version: "0.9.3",
       },
     },
     {
