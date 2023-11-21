@@ -2,7 +2,7 @@
   "name": "bunny",
   "productName": "Bunny",
   "version": "0.9.1",
-  "description": "Bunny reminder",
+  "description": "Bunny",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -39,7 +39,8 @@
           "config": {
             "name": "Bunny",
             "loadingGif": "./assets/bunny.gif",
-            "setupIcon": "./assets/Logo.ico"
+            "setupIcon": "./assets/Logo.ico",
+            "icon": "./assets/Logo.ico"
           }
         }
       ]

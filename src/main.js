@@ -13,6 +13,7 @@ const path = require("path");
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
+  app.exit();
 }
 
 let win;
@@ -22,7 +23,7 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    // resizable: false,
+    resizable: false,
     icon: nativeImage.createFromPath("assets/Logo.png"),
     webPreferences: {
       nodeIntegration: true,
@@ -60,6 +61,7 @@ app.whenReady().then(() => {
       label: "Закрити додаток",
       click: () => {
         app.quit();
+        app.exit();
       },
     }),
   ]);
@@ -82,6 +84,7 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
+    app.exit();
   }
 });
 
