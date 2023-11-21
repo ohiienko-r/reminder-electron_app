@@ -1,9 +1,6 @@
 module.exports = {
   packagerConfig: {},
-  rebuildConfig: {
-    icon: "./assets/Logo",
-    name: "Bunny",
-  },
+  rebuildConfig: {},
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
@@ -11,9 +8,9 @@ module.exports = {
         name: "Bunny",
         authors: "Ohiienko R.",
         description: "Bunny reminder",
-        icon: "./assets/Logo",
-        setupIcon: "./assets/Logo.ico",
-        loadingGif: "./assets/preloader.gif",
+        icon: "assets/Logo.ico",
+        setupIcon: "assets/Logo.ico",
+        loadingGif: "assets/preloader.gif",
         version: "0.9.3",
       },
     },
