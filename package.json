@@ -1,8 +1,8 @@
 {
   "name": "bunny",
-  "productName": "bunny",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "productName": "Bunny",
+  "version": "0.9.1",
+  "description": "Bunny reminder",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -26,6 +26,24 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.1.0",
     "@electron-forge/plugin-vite": "^7.1.0",
     "electron": "^27.1.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./assets/Logo.ico",
+        "name": "Bunny"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Bunny",
+            "loadingGif": "./assets/bunny.gif",
+            "setupIcon": "./assets/Logo.ico"
+          }
+        }
+      ]
+    }
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",

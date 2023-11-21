@@ -52,7 +52,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  const icon = nativeImage.createFromPath("assets/Logo.png");
+  const icon = nativeImage.createFromPath("assets/Logo.ico");
   const tray = new Tray(icon);
 
   const contextMenu = Menu.buildFromTemplate([
