@@ -5,5 +5,5 @@
 І почнем ми з майбутніх оновлень 😁😁😁
 
 В наступних серіях: 
-**v1.1.0** Big security updates;
-**v1.1.1** Custom app's top bar with custom action buttons;
+ - **v1.1.0** Big security updates;
+ - **v1.1.1** Custom app's top bar with custom action buttons;
