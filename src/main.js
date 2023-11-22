@@ -9,6 +9,7 @@ const {
   shell,
 } = require("electron");
 const path = require("path");
+import TrayIconURL from "../assets/Logo.png?url";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -17,6 +18,7 @@ if (require("electron-squirrel-startup")) {
 }
 
 let win;
+let tray;
 
 const createWindow = () => {
   // Create the browser window.
@@ -53,8 +55,8 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  const icon = nativeImage.createFromPath("assets/Logo.png");
-  const tray = new Tray(icon);
+  const icon = nativeImage.createFromDataURL(TrayIconURL);
+  tray = new Tray(icon);
 
   const contextMenu = Menu.buildFromTemplate([
     new MenuItem({
@@ -98,4 +100,5 @@ app.on("activate", () => {
 
 ipcMain.on("open-external-url", (event, url) => {
   shell.openExternal(url);
+  event.preventDefault();
 });

@@ -8,7 +8,7 @@
     "forge": {
       "packagerConfig": {
         "name": "Bunny",
-        "icon": "./assets/Logo.png"
+        "icon": "./assets/Logo"
       },
       "makers": [
         {
@@ -33,17 +33,26 @@
             "build": [
               {
                 "entry": "src/main.js",
-                "config": "vite.main.config.mjs"
+                "config": "vite.main.config.mjs",
+                "files": [
+                  "assets/"
+                ]
               },
               {
                 "entry": "src/preload.js",
-                "config": "vite.preload.config.mjs"
+                "config": "vite.preload.config.mjs",
+                "files": [
+                  "assets/"
+                ]
               }
             ],
             "renderer": [
               {
                 "name": "main_window",
-                "config": "vite.renderer.config.mjs"
+                "config": "vite.renderer.config.mjs",
+                "files": [
+                  "assets/"
+                ]
               }
             ]
           }
