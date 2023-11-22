@@ -143,11 +143,14 @@ export const removeIntervals = () => {
   });
   console.log("All intervals are cleared");
 
+  console.log(rTimeouts);
+};
+
+export const removeTimeouts = () => {
   rTimeouts.forEach((timeoutId) => {
     clearTimeout(timeoutId);
   });
   console.log("All timeouts are cleared");
-  console.log(rTimeouts);
 };
 
 /**
@@ -179,8 +182,9 @@ export const shiftOnAppLoadActions = (
     }
     console.log("Current timeouts: " + rTimeouts);
   } else {
-    newNotification(NOTIFICATION.DEFAULT_TITLE, NOTIFICATION.DEFAULT_BODY);
     stopRemindingBtn.disabled = true;
     console.log("No shift presented");
   }
+
+  newNotification(NOTIFICATION.DEFAULT_TITLE, NOTIFICATION.DEFAULT_BODY);
 };

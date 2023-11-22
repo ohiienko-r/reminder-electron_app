@@ -3,6 +3,7 @@ import {
   shiftOnAppLoadActions,
   setReminderInterval,
   removeIntervals,
+  removeTimeouts,
 } from "./API.js";
 import { NOTIFICATION, SHIFT } from "./helpers.js";
 
@@ -60,6 +61,7 @@ stopAllReminders.onclick = () => {
   startNightShiftReminder.disabled = false;
   stopAllReminders.disabled = true;
 
+  removeTimeouts();
   removeIntervals();
 
   localStorage.clear();
