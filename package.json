@@ -1,9 +1,65 @@
 {
   "name": "bunny",
   "productName": "Bunny",
-  "version": "1.0.0",
+  "version": "0.9.4",
   "description": "Bunny reminder",
   "main": ".vite/build/main.js",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "Bunny",
+        "icon": "./assets/Logo"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Bunny",
+            "description": "Bunny reminder",
+            "icon": "./assets/Logo.png",
+            "setupIcon": "./assets/Logo.ico",
+            "loadingGif": "./assets/preloader.gif",
+            "version": "0.9.4",
+            "targets": [
+              "win32"
+            ]
+          }
+        }
+      ],
+      "plugins": [
+        {
+          "name": "@electron-forge/plugin-vite",
+          "config": {
+            "build": [
+              {
+                "entry": "src/main.js",
+                "config": "vite.main.config.mjs",
+                "files": [
+                  "assets/"
+                ]
+              },
+              {
+                "entry": "src/preload.js",
+                "config": "vite.preload.config.mjs",
+                "files": [
+                  "assets/"
+                ]
+              }
+            ],
+            "renderer": [
+              {
+                "name": "main_window",
+                "config": "vite.renderer.config.mjs",
+                "files": [
+                  "assets/"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -13,7 +69,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "Roman Ohiienko",
+    "name": "Roman O.",
     "email": "ohiienko.r@gmail.com"
   },
   "license": "MIT",

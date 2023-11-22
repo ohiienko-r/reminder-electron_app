@@ -128,8 +128,10 @@ export const setReminderInterval = (shift) => {
       rIntervals.push(nIntervId);
     }, getTimeUntilNextReminder(shift));
     rTimeouts.push(sTimeoutId);
+    console.log("Current timeouts: " + rTimeouts);
   }, getTimeUntilNextReminder(shift));
   rTimeouts.push(fTimeoutId);
+  console.log("Current timeouts: " + rTimeouts);
 };
 
 /**
@@ -145,6 +147,7 @@ export const removeIntervals = () => {
     clearTimeout(timeoutId);
   });
   console.log("All timeouts are cleared");
+  console.log(rTimeouts);
 };
 
 /**
@@ -174,6 +177,7 @@ export const shiftOnAppLoadActions = (
         startNightReminderBtn.disabled = true;
         break;
     }
+    console.log("Current timeouts: " + rTimeouts);
   } else {
     newNotification(NOTIFICATION.DEFAULT_TITLE, NOTIFICATION.DEFAULT_BODY);
     stopRemindingBtn.disabled = true;
