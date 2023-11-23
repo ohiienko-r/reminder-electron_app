@@ -19,7 +19,6 @@ if (require("electron-squirrel-startup")) {
 
 let win;
 let tray;
-// const exeName = path.basename(process.execPath);
 
 const createWindow = () => {
   // Create the browser window.
@@ -104,6 +103,6 @@ app.setLoginItemSettings({
 });
 
 ipcMain.on("open-external-url", (event, url) => {
-  shell.openExternal(url);
   event.preventDefault();
+  shell.openExternal(url);
 });
