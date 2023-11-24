@@ -5,8 +5,6 @@ const {
   MenuItem,
   Tray,
   nativeImage,
-  ipcMain,
-  shell,
 } = require("electron");
 const path = require("path");
 import TrayIconURL from "../assets/Logo.png?url";
@@ -19,9 +17,6 @@ if (require("electron-squirrel-startup")) {
 
 let win;
 let tray;
-
-const appFolder = path.dirname(process.execPath);
-const startExe = path.resolve(appFolder, "..", "Bunny.exe");
 
 const createWindow = () => {
   // Create the browser window.
