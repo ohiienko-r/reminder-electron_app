@@ -5,8 +5,6 @@ const {
   MenuItem,
   Tray,
   nativeImage,
-  ipcMain,
-  shell,
 } = require("electron");
 const path = require("path");
 import TrayIconURL from "../assets/Logo.png?url";
@@ -35,6 +33,11 @@ const createWindow = () => {
 
   const menu = Menu.buildFromTemplate([]);
   Menu.setApplicationMenu(menu);
+
+  win.webContents.on("did-finish-load", () => {
+    win.show();
+    win.focus();
+  });
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -78,6 +81,15 @@ app.whenReady().then(() => {
       win.restore();
     }
   });
+
+  const loginItemSettings = app.getLoginItemSettings();
+
+  if (!loginItemSettings.openAtLogin) {
+    app.setLoginItemSettings({
+      openAtLogin: true,
+      enabled: true,
+    });
+  }
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -96,9 +108,4 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
-});
-
-ipcMain.on("open-external-url", (event, url) => {
-  shell.openExternal(url);
-  event.preventDefault();
 });
