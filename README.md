@@ -6,4 +6,5 @@
 
 В наступних серіях: 
  - **v1.1.0** Big security updates;
- - **v1.1.1** Custom app's top bar with custom action buttons;
+ - **v1.1.1** System reminder onclick action that opens a required URL;
+ - **v1.1.2** Custom status bar with opportunity to hide app instead of closing it**
