@@ -8,6 +8,8 @@
 
   animation: global;
   animation-duration: 0.4s;
+
+  user-select: none;
 }
 
 .wrapper {

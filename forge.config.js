@@ -8,6 +8,8 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         icon: "./assets/Logo.ico",
+        iconUrl:
+          "https://drive.google.com/file/d/1L5T_ZT4LWqeBeOTn5bsnKeUJ7l_qh_XA/view?usp=sharing",
       },
     },
     {
