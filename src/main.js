@@ -20,6 +20,9 @@ if (require("electron-squirrel-startup")) {
 let win;
 let tray;
 
+const appFolder = path.dirname(process.execPath);
+const startExe = path.resolve(appFolder, "..", "Bunny.exe");
+
 const createWindow = () => {
   // Create the browser window.
   win = new BrowserWindow({
@@ -35,6 +38,11 @@ const createWindow = () => {
 
   const menu = Menu.buildFromTemplate([]);
   Menu.setApplicationMenu(menu);
+
+  win.webContents.on("did-finish-load", () => {
+    win.show();
+    win.focus();
+  });
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -78,6 +86,15 @@ app.whenReady().then(() => {
       win.restore();
     }
   });
+
+  const loginItemSettings = app.getLoginItemSettings();
+
+  if (!loginItemSettings.openAtLogin) {
+    app.setLoginItemSettings({
+      openAtLogin: true,
+      enabled: true,
+    });
+  }
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -96,13 +113,4 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
-});
-
-app.setLoginItemSettings({
-  openAtLogin: true,
-});
-
-ipcMain.on("open-external-url", (event, url) => {
-  event.preventDefault();
-  shell.openExternal(url);
 });

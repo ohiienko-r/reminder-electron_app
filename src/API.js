@@ -10,11 +10,10 @@ let rTimeouts = [];
  * @param {String} body - message body to display in a system message
  */
 export const newNotification = (title, body) => {
-  new Notification(title, { body: body }).onclick = () => {
-    const urlToOpen =
-      "https://docs.google.com/forms/d/e/1FAIpQLScfJrV68cLKcJ7iFJV4HjDtB0Vl3IhyaxOt22_wGXJHXd5cDQ/viewform";
-    ipcRenderer.send("open-external-url", urlToOpen);
-  };
+  new Notification(title, {
+    body: body,
+    requireInteraction: true,
+  });
 };
 
 /**
