@@ -1,4 +1,4 @@
-export const NOTIFICATION = {
+export const NOTIFICATION = Object.freeze({
   DEFAULT_TITLE: "Reminder",
   DEFAULT_BODY:
     "Псс...Не забувай відмічати час початку та завершення роботи 😉",
@@ -14,9 +14,9 @@ export const NOTIFICATION = {
   CHECK_OUT_REMINDER_BODY: "Час зробити check out 🙃",
   STOP_REMINDING_TITLE: "Reminding stopped 😱",
   STOP_REMINDING_BODY: "Не забудь потім ввімкнути мене, добре? 🤗",
-};
+});
 
-export const SHIFT = {
+export const SHIFT = Object.freeze({
   DAY: "day",
   NIGHT: "night",
-};
+});

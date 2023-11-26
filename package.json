@@ -1,7 +1,7 @@
 {
   "name": "bunny",
   "productName": "Bunny",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "description": "Bunny reminder",
   "main": ".vite/build/main.js",
   "config": {
@@ -19,7 +19,7 @@
             "icon": "./assets/Logo.png",
             "setupIcon": "./assets/Logo.ico",
             "loadingGif": "./assets/preloader.gif",
-            "version": "0.9.9",
+            "version": "1.0.0",
             "targets": [
               "win32"
             ]
