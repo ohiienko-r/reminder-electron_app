@@ -117,13 +117,13 @@ export const setReminderInterval = (shift) => {
   let fTimeoutId = setTimeout(() => {
     remind(shift);
 
-    let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
+    let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000, shift);
     rIntervals.push(nIntervId);
 
     let sTimeoutId = setTimeout(() => {
       remind(shift);
 
-      let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000);
+      let nIntervId = setInterval(remind, 24 * 60 * 60 * 1000, shift);
       rIntervals.push(nIntervId);
     }, getTimeUntilNextReminder(shift));
     rTimeouts.push(sTimeoutId);
