@@ -1,15 +1,16 @@
 @font-face {
-  font-family: Inter, system-ui;
-  src: url("../fonts/Inter-VariableFont_slnt\,wght.ttf");
+  font-family: Poppins, system-ui;
+  src: url("../fonts/Poppins/Poppins-Black.ttf");
 }
 
 * {
-  font-family: "Inter", system-ui;
+  font-family: "Poppins-Black", system-ui;
 
-  animation: global;
-  animation-duration: 0.4s;
+  color: #F0EFEF;
 
   user-select: none;
+
+  transition-duration: 0.3s;
 }
 
 .wrapper {
@@ -21,12 +22,13 @@
 .navigation {
   display: flex;
   justify-content: center;
-  padding: 10px 0px;
-  background-color: #fefefe;
+  padding: 1.5em 0;
+  background-color: #060404;
 }
 
-.navigation img {
-  -webkit-user-drag: none;
+.navigation h2 {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 main {
@@ -34,38 +36,43 @@ main {
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 20px 20px;
-  background-color: #D9D9D9;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  padding: 2em 2em;
+  background-color: #121010;
 }
 
 .btns-container {
   height: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 1em;
   flex: 1 1 auto;
 }
 
 .reminder-btn {
-  padding: 15px 0 15px 0;
+  padding: 1em 0;
 
-  border-radius: 10px;
+  border-radius: 0.5em;
 
   text-align: center;
 
-  color: black;
-  background-color: #fefefe;
+
+  background-color: #AC403E;
 
   font-size: 16px;
-  font-weight: 500;
 
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#stop-btn {
+  background-color: #280909;
+}
+
+#stop-btn:disabled {
+  display: none;
 }
 
 .reminder-btn:hover {
   cursor: pointer;
-  background-color: #fefefe9b;
+  box-shadow: 0px 0px 40px 0px rgba(172, 64, 62, 0.50);
 }
 
 .reminder-btn:active {
@@ -73,19 +80,17 @@ main {
 }
 
 .reminder-btn:disabled {
-  background-color: #fefefe7c;
-  color: #D9D9D9;
   box-shadow: none;
-  filter: grayscale(80%);
+  filter: grayscale(100%);
   cursor: auto;
 }
 
 footer {
-  padding: 5px;
+  padding: 0.5em;
+  color: #F0EFEF;
 
   text-align: center;
 
 
-  background-color: #fefefe;
-  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: #060404;
 }
