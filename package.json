@@ -1,25 +1,25 @@
 {
-  "name": "bunny",
-  "productName": "Bunny",
-  "version": "1.0.0",
-  "description": "Bunny reminder",
+  "name": "reminder",
+  "productName": "Reminder",
+  "version": "1.0.1",
+  "description": "Reminder",
   "main": ".vite/build/main.js",
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "Bunny",
+        "name": "Reminder",
         "icon": "./assets/Logo"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Bunny",
-            "description": "Bunny reminder",
+            "name": "Reminder",
+            "description": "Reminder",
             "icon": "./assets/Logo.png",
             "setupIcon": "./assets/Logo.ico",
             "loadingGif": "./assets/preloader.gif",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "targets": [
               "win32"
             ]
